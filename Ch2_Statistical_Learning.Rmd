@@ -11,7 +11,11 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = F)
 ```
 
-Statistical learning is trying to mimic a real world function, or, phenomena, either quantitative or qualitative with some error terms which can't be reduced. 
+```{r}
+library(knitr)
+```
+
+
 
 ## 2.1 What Is Statistical Learning? 
 
@@ -78,14 +82,167 @@ Parametric and non-parametric methods:
 
 ## Assessing Model Accuracy
 
-the mean squared error (MSE)
+### 2.2.1 The mean squared error (MSE)
 
 $$
 MSE = \frac{1}{n}\sum_{i = 1}^{n}(y_i - \hat{f}(x_i))^2
 $$
 
-The three scenario data plot and variance error plot. 
+### 2.2.2 Variance-bias trade-off: 
+
+$$
+\begin{align}
+E(y_0 - \hat{f}(x_0))^2 &= \text{Var}(\hat{f}(x_0)) + [\text{Bias}(\hat{f}(x_0))]^2 + \text{Var}(\epsilon)
+\end{align}
+$$
+
+Variance measures the model's sensitivity to the training data. A high variance model tends to overfit the data, capturing noise along with the underlying pattern.
+
+Bias arises when the model is too simplistic and fails to capture the underlying trend in the data.A high bias model tends to underfit the data, missing relevant relations between features and target outputs.
+
+This is the noise inherent in the data. It represents the lowest possible error that cannot be reduced by any model.
+
+
+```{r}
+knitr::include_graphics("img/complexity_variance_bias_trade_off.png")
+```
+
+### 2.2.3 The Accuracy in Classification Setting
+
+Error rate: Proportion of mis-classified cases. 
+
+$$
+\frac{1}{n}\sum_{i = 1}^{n}I(y_i \neq \hat{y}_i)
+$$
+
+The Bayes Classifier: 
+
+1. Bayes' Theorem
+
+$$
+P(C_k|X) = \frac{P(X|C_k)\cdot P(C_k)}{P(X)}
+$$
+
+2. Bayes Classifier produces the lowest error rate: 
+
+$$
+\hat{y} = \text{argmax}_{C_k}P(C_k|X)
+$$
+
+Choose the class with the highest posterior probability, and the overall error rate will be minimized. 
+
+$$
+1 - E\bigg(\underset{j}{\max}{\Pr}(Y = j|X)\bigg)
+$$
+
+A visualization to show the decision boundary. 
+
+2. Breast Cancer Example Using Bayes Classifier. 
+
+1. Prior probability: 
+$P(Maligant) = 0.3$; $P(Benign) = 0.7$
+
+2. Likelihoods: 
+
+$P(X|Malignant) = 0.2$: The likelihood/probability to observe the feature value $X$ if the case is malignant; 
+
+$P(X|Benigh) = 0.1$: The likelihood/probability to observe the feature value $X$ if the case is benign; 
+
+3. Marginal Probability: total probability of of feature X
+
+Comes from: 1) malignant with feature X; 2) Benign with feature X
+
+$$
+\begin{align}
+P(X) &= P(X|Malignant) \cdot P(Malignant) + P(X|Benign) \cdot P(Benign) \\
+&= 0.2 \cdot 0.3 + 0.1 \cdot 0.7 \\
+&= 0.13
+\end{align} 
+$$
+
+4. The posterior probability of each class given feature X. 
+
+Probability to be Benigh: 
+
+$$
+\begin{align}
+P(Benigh|X) &= \frac{P(X|Benign) \cdot P(Benigh)}{P(X)} \\
+&= \frac{0.1 \times 0.7}{0.13} \\
+&\approx 0.538
+
+\end{align}
+$$
+
+Probability to be malignant: 
+
+$$
+\begin{align}
+P(Malignant|X) &= \frac{P(X|malignant) \cdot P(Malignant)}{P(X)} \\
+&= \frac{0.2 \times 0.3}{0.13} \\
+&\approx 0.462
+
+\end{align}
+$$
+
+In summary: 
+
+Assign the observed case with feature $X$ to the most likely class. 
+
+Reference: 
+
+The Wisconsin Breast Cancer Dataset (WBCD): 
+
+Rousseeuw, P. J., & Croux, C. (1995). "Alternatives to the Mean Absolute Deviation." Journal of the American Statistical Association, 90(429), 1394-1404.
+
+Witten, I. H., & Frank, E. (2005). Data Mining: Practical Machine Learning Tools and Techniques (2nd ed.). Morgan Kaufmann. (Includes discussion of the WBCD dataset and Naive Bayes classification).
+
+
 
 ## Lab: Introduction to R
 
+```{r}
+x <- rnorm(100)
+
+y <- rnorm(100)
+
+plot(x, y)
+```
+
+```{r}
+x <- seq(-pi, pi, length = 50)
+
+y <- x
+
+f <- outer(x, y, function(x, y) cos(y) /(1 + x^2))
+
+contour(x, y, f)
+
+contour(x, y, f, nlevels = 45, add = T)
+
+fa <- (f - t(f)) / 2
+
+contour(x, y, fa, nlevels = 15)
+```
+
 ## Exercise
+
+1-1: 
+a. sample size n is extreme large, number of predictor p is small: 
+
+Variance: large sample size reduce variance; 
+Bias: small number of predictors do not need too much flexibility
+Flexible model works well. 
+
+b. small n, extremely large p. 
+
+Variance: large; bias: 
+
+Inflexible model works well to control variance. 
+
+c: Highly non-linear: 
+
+flexible model to mimic the non-linear shape. 
+
+d: error term is high
+
+inflexible model to prevent the model from chasing noise. 
