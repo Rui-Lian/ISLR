@@ -78,6 +78,14 @@ Parametric and non-parametric methods:
 
 ## Assessing Model Accuracy
 
+the mean squared error (MSE)
+
+$$
+MSE = \frac{1}{n}\sum_{i = 1}^{n}(y_i - \hat{f}(x_i))^2
+$$
+
+The three scenario data plot and variance error plot. 
+
 ## Lab: Introduction to R
 
 ## Exercise
