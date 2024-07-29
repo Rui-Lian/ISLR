@@ -115,15 +115,15 @@ $$
 \frac{1}{n}\sum_{i = 1}^{n}I(y_i \neq \hat{y}_i)
 $$
 
-The Bayes Classifier: 
+## The Bayes Classifier: 
 
-1. Bayes' Theorem
+### 1. Bayes' Theorem
 
 $$
 P(C_k|X) = \frac{P(X|C_k)\cdot P(C_k)}{P(X)}
 $$
 
-2. Bayes Classifier produces the lowest error rate: 
+### 2. Bayes Classifier produces the lowest error rate: 
 
 $$
 \hat{y} = \text{argmax}_{C_k}P(C_k|X)
@@ -135,9 +135,9 @@ $$
 1 - E\bigg(\underset{j}{\max}{\Pr}(Y = j|X)\bigg)
 $$
 
-A visualization to show the decision boundary. 
+### 3. A visualization to show the decision boundary. 
 
-2. Breast Cancer Example Using Bayes Classifier. 
+### Breast Cancer Example Using Bayes Classifier. 
 
 1. Prior probability: 
 $P(Maligant) = 0.3$; $P(Benign) = 0.7$
@@ -195,6 +195,40 @@ The Wisconsin Breast Cancer Dataset (WBCD):
 Rousseeuw, P. J., & Croux, C. (1995). "Alternatives to the Mean Absolute Deviation." Journal of the American Statistical Association, 90(429), 1394-1404.
 
 Witten, I. H., & Frank, E. (2005). Data Mining: Practical Machine Learning Tools and Techniques (2nd ed.). Morgan Kaufmann. (Includes discussion of the WBCD dataset and Naive Bayes classification).
+
+## K- NearestNeighbors
+
+$$
+{\Pr}(Y = j | X = x_0) = \frac{1}{K}\sum_{i \in \mathcal{N}_{0}}I(y_i = j)
+$$
+
+Left of equal sign: 
+
+$Y = j$: class label $Y$ equal to the $jth$ class, which is one of the possible class; 
+
+$X = x_0$: instance $x_0$ in feature space $X$; 
+
+Left of the equal sign: Given the feature $x_0$, the probability of $x_0$ that in $jth$ class. 
+
+Right of equal sign: 
+
+$K$, K neighbors that are nearest of $x_0$, $K$ is a hyperparameter
+
+$\mathcal{N}_0$: set indices of the K neighbors from 1 to K
+
+$I(y_i = j)$: indicator function that equals 1 if class label $y_i$ of the $ith$ neighbor is j, i.e., among the K neighbors, if the $ith$ point belongs to $j$ class, the function $I$ is 1. 
+
+$\sum_{i \in \mathcal{N_0}}I(y_i = j)$: the number of neighbors among the K nearest neighbors whose class label is $j$. 
+
+In summary: 
+
+Choose Hyperparameter K; 
+
+Identify the K Nearest Neighbors; 
+
+Calculate the Probability of Each Class
+
+Assign the Class with the Highest Probability
 
 
 
