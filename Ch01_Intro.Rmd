@@ -1,0 +1,106 @@
+---
+title: "Introduction"
+author: "Lian Rui"
+date: "2024-07-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ISLR2)
+```
+
+
+# An Overview of Statistical Learning
+
+## Wage Data
+
+Regression, linear/non-linear multivariate, variation unexplained. 
+
+## Stock Market Data
+
+```{r}
+data(Smarket)
+
+# Fit a logistic regression model using lagged returns
+glm.fit <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume, data=Smarket, family=binomial)
+
+# Summarize the model
+summary(glm.fit)
+
+```
+
+
+## Gene Expression Data
+
+PCA
+
+# A Brief History of Statistical Learning
+
+# This Book
+
+# Who Should Read This Book
+
+# Organization of This Book
+
+Ch2: 
+
+  - Basic terminology and concept
+  
+  - KNN
+  
+Ch3--Ch4: 
+
+  - Linear method: regression and classification
+  
+  - Logistic regression and LDA
+  
+Ch5: 
+
+  - Cross validation and bootstrap
+  
+Ch6: 
+
+ - Stepwise selection
+ 
+ - Ridge regression
+ 
+ - Principal component regression
+ 
+ - Lasso
+ 
+Ch7: 
+
+  - Additive model
+  
+Ch8: 
+
+  - Bagging
+  
+  - Boosting
+  
+  - Random Forest
+  
+  - Support vector machines
+  
+Ch9: 
+
+  - Deep learning
+  
+Ch10-11: 
+
+  - Survival analysis
+  
+Ch12: 
+
+ - PCA
+ 
+ - Kmeans
+ 
+ - Hierarchical clusting
+
+
+
