@@ -228,9 +228,27 @@ Identify the K Nearest Neighbors;
 
 Calculate the Probability of Each Class
 
-Assign the Class with the Highest Probability
+Assign the Class with the Highest Probability. 
 
+Flexibility of KNN: 
 
+Small K:
+
+- Training Error: Low
+
+- Testing Error: High (due to high variance)
+
+Large K:
+
+- Training Error: High
+
+- Testing Error: High (if too large, due to high bias)
+
+Intermediate K (Optimal):
+
+- Training Error: Moderate
+
+- Testing Error: Low (balanced bias and variance)
 
 ## Lab: Introduction to R
 
