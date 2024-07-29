@@ -1,0 +1,47 @@
+---
+title: "Ch2_Statistical_Learning"
+author: "Lian Rui"
+date: "2024-07-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = F,
+                      warning = F)
+```
+
+## 2.1 What Is Statistical Learning? 
+
+$$
+Y = f(X) + \epsilon
+$$
+
+### 2.1.1 Why Estimate f?
+
+For prediction and inference. 
+
+$$
+\hat{Y} = \hat{f}(X)
+$$
+
+$$
+\begin{align}
+\text{E}(Y - \hat{Y}) &= E[f(x) + \epsilon - \hat{f}(X)]^2 \\
+&=[f(X) - \hat{f}(X0)]^2 + \text{Var}(\epsilon)
+\end{align}
+$$
+
+### 2.1.2How Do We Estimate f
+
+### 2.1.3The Trade-Off Between Prediction Accuracy and Model Interpretability
+
+### 2.1.4Supervised Versus Unsupervised Learning
+
+### 2.1.5Regression Versus Classification Problems
+
+## Assessing Model Accuracy
+
+## Lab: Introduction to R
+
+## Exercise
