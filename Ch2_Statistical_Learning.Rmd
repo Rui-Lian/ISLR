@@ -11,34 +11,70 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = F)
 ```
 
+Statistical learning is trying to mimic a real world function, or, phenomena, either quantitative or qualitative with some error terms which can't be reduced. 
+
 ## 2.1 What Is Statistical Learning? 
+
+Advertising data/Income data
+
+- Quantitative, Y and predictors X_i and error term
 
 $$
 Y = f(X) + \epsilon
 $$
 
+Statistical Learning, estimating $f$, error $\epsilon$ will be with the estimation. 
+
 ### 2.1.1 Why Estimate f?
 
 For prediction and inference. 
+
+Prediction as $\hat{f}$: 
 
 $$
 \hat{Y} = \hat{f}(X)
 $$
 
+No error term
+
+But We can't minimize error to zero because of the error composion: 
+
 $$
 \begin{align}
 \text{E}(Y - \hat{Y}) &= E[f(x) + \epsilon - \hat{f}(X)]^2 \\
-&=[f(X) - \hat{f}(X0)]^2 + \text{Var}(\epsilon)
+&=[f(X) - \hat{f}(X)]^2 + \text{Var}(\epsilon)
 \end{align}
 $$
 
-### 2.1.2How Do We Estimate f
+Irreducible error comes with randomness. and Flexible models will chase the noise, leading to overfitting. 
 
-### 2.1.3The Trade-Off Between Prediction Accuracy and Model Interpretability
+### 2.1.2 How Do We Estimate f
 
-### 2.1.4Supervised Versus Unsupervised Learning
+Apply a statistical learning method to training data to estimate the unknown function $f$--we believe every observation in this world is a function. We are trying to approximate: 
 
-### 2.1.5Regression Versus Classification Problems
+$$
+Y \approx \hat{f}(X)
+$$
+
+Parametric and non-parametric methods: 
+
+### Comparison of Parametric and Non-Parametric Methods
+
+| Feature                      | Parametric Methods                  | Non-Parametric Methods          |
+|------------------------------|-------------------------------------|---------------------------------|
+| **Number of Parameters**     | Fixed                               | Grows with data size            |
+| **Assumptions**              | Strong assumptions about data form  | Few assumptions about data form |
+| **Complexity**               | Simpler, fixed structure            | Flexible, adaptive structure    |
+| **Computational Efficiency** | Generally more efficient            | Generally less efficient        |
+| **Risk of Overfitting**      | Lower risk                          | Higher risk                     |
+| **Interpretability**         | More interpretable                  | Less interpretable              |
+
+
+### 2.1.3 The Trade-Off Between Prediction Accuracy and Model Interpretability
+
+### 2.1.4 Supervised Versus Unsupervised Learning
+
+### 2.1.5 Regression Versus Classification Problems
 
 ## Assessing Model Accuracy
 
