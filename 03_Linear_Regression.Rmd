@@ -728,8 +728,21 @@ $$
 \hat{\text{y}} = \text{X}\text{b} = (\text{X}^{T}\text{X})^{-1}\text{X}^{T}\text{y} = \text{H}\text{y}
 $$
 
-the i-th diagonal element of H: 
+Cook's distance $D_i$ of the observation $i$ (for $i = 1, \dots, n$) is defined as the sum of all the changes in the regression model when observation $i$ is removed from the observations. 
 
+$$
+D_i = \frac{\sum_{j = 1}^{n}(\hat{y_j} - \hat{y}_{j(i)})^2}{ps^2}
+$$
+
+where: 
+
+$\hat{y}_j$: fitted value including the $i$ observation; 
+
+$\hat{y}_{j(i)}$: fitted value excluding the $i$th observation; 
+
+$p$: the rank of the design matrix
+
+$s^2$: $\frac{\text{e}^{\text{T}}\text{e}}{n - p}$
 
 
 
@@ -750,7 +763,11 @@ X; X_transpose * X
 
 6. Collinearity
 
+VIF: 
 
+$$
+\text{VIF}(\hat{\beta}_{j}) = \frac{1}{1 - R_{X_j|X_{-j}}^{2}}
+$$
 
 ## The Marketing Plan
 
@@ -772,7 +789,7 @@ Linear regression is classic, what are the learnings from linear regression that
 
 - Cross-validation
 
-- Bias-Variance tradeoff
+- Bias-Variance trade-off
 
 
 ## Concepts Summary
