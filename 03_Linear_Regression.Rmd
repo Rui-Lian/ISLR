@@ -202,6 +202,26 @@ __Important Variables__
 
 Individual t-statistics of variables. 
 
+## Likelihood, AIC and BIC
+
+### Likelihood: general definition
+
+$$
+L(\theta|Y, X) = \prod_{i = 1}^{n}f(Y_i|X_i, \theta)
+$$
+
+- $\theta$: parameters of the model; 
+
+- $f(Y_i|X_i, \theta)$: probability density function of the observed data $Y_i$ given predictor $X_i$ and parameter $\theta$. 
+
+### Linear regression: 
+
+__Linear Regression with Normal Errors: __
+
+$$
+Y_i|X_i \sim \mathcal{N}(\beta_0 + \beta_1X_i, \sigma^2)
+$$
+
 
 
 ## Other Considerations in the Regression Model
