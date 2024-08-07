@@ -214,13 +214,156 @@ $$
 
 - $f(Y_i|X_i, \theta)$: probability density function of the observed data $Y_i$ given predictor $X_i$ and parameter $\theta$. 
 
-### Linear regression: 
+### Likelihood of Standard Normal Distribution
+
+__Standard Normal Distribution__
+
+For a single observation $x_i$, the probability density function: 
+
+$$
+f(x_i) = \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}
+$$
+
+$n$ independent observations $x_1, x_2, \dots, x_n$, the likelihood function $L$: 
+
+$$
+\begin{align}
+L(x_1, x_2, \dots, x_n |\mu = 0, \sigma = 1) &= \prod_{i = 1}^{n}\frac{1}{\sqrt{2\pi}}e^{-\frac{x_i^2}{2}} \\
+&=\bigg(\frac{1}{\sqrt{2\pi}}\bigg)^ne^{-\frac{1}{2}\sum_{i = 1}^{n}x_i^2}
+\end{align}
+$$
+
+Likelihood: the product of the individual probabilities/probabilities densities. 
+
+Based on the likelihood function above, two scenario further: 
+
+- scenario 1: the n observations are close to the center of the distribution, 
+
+- scenario 2: n observations are scattered. what is the difference of the likelihood of these two scenario
+
+A Fishing Analogy(assuming the distribution): 
+
+Fish Near the center
+
+Fish scattered across the pond
+
+### Likelihood of Linear regression: 
 
 __Linear Regression with Normal Errors: __
 
 $$
 Y_i|X_i \sim \mathcal{N}(\beta_0 + \beta_1X_i, \sigma^2)
 $$
+
+__Probability Density function of $y_i$ given $x_i$__
+
+$$
+f(y_i |x_i, \beta_0, \beta_1, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\bigg(-\frac{(y_i - (\beta_0 + \beta_1x_i))^2}{2\sigma^2}\bigg)
+$$
+
+__Likelihood Function__: 
+
+$$
+L(\beta_0, \beta_1, \sigma^2|x_1, y_1, \dots, x_n, y_n) = \prod_{i = 1}^{n}\frac{1}{\sqrt{2\pi\sigma^2}}\exp\bigg(-\frac{(y_i - (\beta_0 + \beta_1x_i))^2}{2\sigma^2}\bigg)
+$$
+
+__Log-Likelihood Function__
+
+Summary
+
+Likelihood Function: The likelihood function for linear regression quantifies how probable the observed data is given the parameters $\beta_0$, $\beta_1$, $\sigma^2$
+​
+Log-Likelihood Function: Simplifies the calculation and is used to find parameter estimates by maximizing it.
+
+MLE: Estimating $\beta_0$, $\beta_1$ using MLE is equivalent to performing ordinary least squares regression. The MLE for is the average of the squared residuals.
+In summary, the likelihood function in linear regression helps us estimate the parameters of the model by maximizing the probability of observing the given data under the assumed linear relationship.
+
+### AIC and BIC
+
+Akaike Information Criterion (AIC) 
+
+$$
+\text{AIC} = 2k -2\log L
+$$
+
+k is the number of parameters in the model.
+
+L is the maximum value of the likelihood function for the model.
+
+Lower AIC values indicate a better-fitting model, taking into account the number of parameters. It balances goodness of fit and model complexity.
+
+
+Bayesian Information Criterion (BIC)
+
+$$
+\text{BIC} = \log(n)\times k - 2\log L
+$$
+
+n is the number of observations.
+
+k is the number of parameters in the model.
+
+L is the maximum value of the likelihood function for the model.
+
+Lower BIC values indicate a better-fitting model, but BIC penalizes model complexity more heavily compared to AIC, especially as the sample size n increases.
+
+### Integrated metric for linear model evaluation
+
+__Fit and Complexity__
+
+R-squared and Adjusted R-squared provide a measure of how well the model fits the data. Use $R^2$ for initial insights and $R_{adj}^{2}$ for adjusting based on the number of predictors. 
+
+
+MSE provides a measure of the average prediction error, useful for understanding the absolute fit of the model.
+
+
+__Model Significance__
+
+F-score tests whether the model’s predictors are jointly significant. High F-values suggest that the model explains a significant amount of variance.
+
+__Model Selection__
+
+AIC and BIC are used for model comparison. They help in selecting the best model among several by balancing fit and complexity. AIC is more forgiving with complexity, while BIC is more stringent, especially with large sample sizes.
+
+## A flow chart of model diagnosis
+
+                [Data Preparation]
+                      ↓
+                [Fit Linear Model]
+                      ↓
+          [Model Evaluation]
+          /         |         \
+   [R-squared]  [Adjusted R-squared]  [F-statistic]
+         ↓              ↓                  ↓
+    [Acceptable?]   [Acceptable?]     [Significant?]
+      /  \                /  \                /  \
+   No   Yes            No   Yes           No   Yes
+   ↓     ↓             ↓     ↓            ↓      ↓
+[Improve Model]   [MSE Check]        [Check MSE]
+                           ↓                   ↓
+                [Is MSE Acceptable?]
+                        /  \
+                    No    Yes
+                    ↓        ↓
+           [Improve Model] [AIC & BIC Check]
+                                        ↓
+                             [Check AIC & BIC]
+                                       ↓
+                     [Model Diagnostics]
+                     /     |     |    \     \
+[Outlier Detection] [Influential Points] [VIF] [Residuals Plot]
+      ↓                       ↓                ↓         ↓
+ [Are there outliers?] [Check Cook's Distance] [High VIF?] [Acceptable?]
+       /  \                     /  \                /  \       /  \
+     Yes  No                  Yes  No           Yes  No     No   Yes
+     ↓     ↓                    ↓     ↓            ↓      ↓       ↓
+[Investigate]  [Cross-Validation] [Address Multicollinearity]
+                             ↓
+                      [Is Model Satisfactory?]
+                                             /    \
+                                          No      Yes
+                                          ↓        ↓
+                                [Refine Model]  [Finalize Model]
 
 
 
