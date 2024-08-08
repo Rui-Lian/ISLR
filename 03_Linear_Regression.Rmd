@@ -992,6 +992,13 @@ head(Carseats)
 lm.fit <- lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
 ```
 
-
-
 ## Exercises. 
+
+https://rpubs.com/lmorgan95/ISLR_CH3_Solutions
+
+3E1: 
+the hypothesis testing of the coef. null hypothesis, beta = 0, alternative, beta != 0. 
+
+3E2: 
+KNN in classification and regression. 
+
