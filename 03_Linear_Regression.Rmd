@@ -996,11 +996,9 @@ lm.fit <- lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
 
 https://rpubs.com/lmorgan95/ISLR_CH3_Solutions
 
-3E1: 
-the hypothesis testing of the coef. null hypothesis, beta = 0, alternative, beta != 0. 
+### 3E1: the hypothesis testing of the coef. null hypothesis, beta = 0, alternative, beta != 0. 
 
-3E2: 
-KNN in classification and regression. 
+### 3E2: KNN in classification and regression. 
 
 KNN classification: 
 
@@ -1018,26 +1016,124 @@ $$
 \hat{f}(x_0) = \frac{1}{K}\sum_{i \in \mathcal{N}_0}y_i
 $$
 
-3E3
-Application of multiple linear regression and interpretation of the coef, inc interaction. 
+### 3E3:Application of multiple linear regression and interpretation of the coef, inc interaction. 
 
 Note: the effect of coef is not related to the size of the number, use t test and it depends on the value. 
 
-3E4
-
-Model flexibility, training errors and testing errors. 
+### 3E4: Model flexibility, training errors and testing errors. 
 
 Cubic model is more flexible than linear model. training error of cubic smaller than linear model. testing error of cubic 
 
-3E5
+### 3E5: Linear regression through the origin
 
-Linear regression through the origin
+### 3E6: In the case of simple linear regression, least square line always pass through the mean point. 
 
-3E6
+### 3E7: The R square statistic is equal to the square of the correlation between X and Y. Lot's of algebra to proof. 
 
-In the case of simple linear regression, least square line always pass through the mean point. 
+### 3E8: Horsepower univariate, RSE, ggfortify
 
-3E7
+```{r}
+mpg_horsepower <- lm(mpg ~ horsepower, data = Auto)
+summary(mpg_horsepower)
+```
 
-The R square statistic is equal to the square of the correlation between X and Y. Lot's of algebra to proof. 
+```{r}
+#RSE
+summary(mpg_horsepower)$sigma
+```
+
+```{r}
+summary(mpg_horsepower)$sigma / mean(Auto$mpg)
+```
+
+```{r}
+summary(mpg_horsepower)$r.squared
+```
+
+```{r}
+predict(mpg_horsepower, 
+        data.frame(horsepower = 98), 
+        interval = "confidence", level = 0.95)
+```
+
+```{r}
+predict(mpg_horsepower, data.frame(horsepower = 98), 
+        interval = "prediction", level = 0.95)
+```
+
+```{r}
+theme_set(theme_light())
+
+ggplot(Auto, aes(x = horsepower, y = mpg)) + 
+  geom_point() + 
+  geom_abline(intercept = coef(mpg_horsepower)[1], 
+              slope = coef(mpg_horsepower)[2], 
+              col = "deepskyblue3", 
+              size = 1) + 
+  geom_smooth(se = F)
+
+```
+
+
+```{r}
+library(ggfortify)
+
+autoplot(mpg_horsepower)
+```
+
+### 3E9: Feature plot, full dressed MLR, cook'distance
+
+a) Feature plot of variables. 
+
+```{r}
+library(GGally)
+
+ggpairs(Auto, columns = 1:8)
+```
+
+b) COrrelation between variables. see above
+
+c) lm model 
+
+```{r}
+Auto$origin <- factor(Auto$origin, labels = c("American", "European", "Japanese"))
+
+mpg_lm <- lm(mpg ~ . - name, data = Auto)
+
+summary(mpg_lm)
+```
+c-1: Is there a relationship between the predictors and the response. 
+
+F-statistic. 
+
+c-2: Find predictors of statistic significance. 
+
+c-3: Intrepret of the slope, holding other predictor constant. 
+
+d): model diagnostic
+
+```{r}
+autoplot(mpg_lm)
+```
+
+### Find the influential points. 
+
+```{r}
+library(broom)
+
+library(tidyverse)
+
+mpg_lm_stats <- broom::augment(mpg_lm) %>%
+  select(.rownames, .fitted, .hat, .resid, .std.resid, .cooksd) %>%
+  arrange(desc(.cooksd))
+
+mpg_lm_stats
+```
+
+
+### Interaction terms
+
+```{r}
+summary(lm(formula = mpg ~ . * ., data = Auto[, -9]))
+```
 
