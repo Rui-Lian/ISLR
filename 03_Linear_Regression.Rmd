@@ -1002,3 +1002,42 @@ the hypothesis testing of the coef. null hypothesis, beta = 0, alternative, beta
 3E2: 
 KNN in classification and regression. 
 
+KNN classification: 
+
+$$
+Pr(Y = j|x = x_0) = \frac{1}{K}\sum_{i \in \mathcal{N}_0}I(y_i = j)
+$$
+
+$$
+\hat{f}(x_0)=\arg\max_{j} Pr(Y = j|x = x_0)
+$$
+
+KNN regression: 
+
+$$
+\hat{f}(x_0) = \frac{1}{K}\sum_{i \in \mathcal{N}_0}y_i
+$$
+
+3E3
+Application of multiple linear regression and interpretation of the coef, inc interaction. 
+
+Note: the effect of coef is not related to the size of the number, use t test and it depends on the value. 
+
+3E4
+
+Model flexibility, training errors and testing errors. 
+
+Cubic model is more flexible than linear model. training error of cubic smaller than linear model. testing error of cubic 
+
+3E5
+
+Linear regression through the origin
+
+3E6
+
+In the case of simple linear regression, least square line always pass through the mean point. 
+
+3E7
+
+The R square statistic is equal to the square of the correlation between X and Y. Lot's of algebra to proof. 
+
