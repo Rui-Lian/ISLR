@@ -156,6 +156,7 @@ Yes, it's possible for the Residual Standard Error (RSE), R-squared (\(R^2\)), a
   - The F-statistic tests the null hypothesis that all regression coefficients are zero (i.e., that the model has no explanatory power). A high F-statistic indicates that the predictors collectively have a significant effect on the response variable.
 
 - **Possible Discrepancies**:
+
   - **High F-statistic with Low \(R^2\**: If the F-statistic is high but \(R^2\) is low, it could suggest that the model as a whole is statistically significant, but the proportion of explained variance is still relatively small. This might happen if the model improves the fit significantly compared to a baseline model, but the overall fit is still poor.
   - **Low F-statistic with High \(R^2\)**: If the F-statistic is low while \(R^2\) is high, this might be unusual, but it could occur in cases where the degrees of freedom or sample size are very small. The F-statistic might not be large enough to reach statistical significance, even if the model explains a lot of variance.
 
@@ -791,9 +792,206 @@ Linear regression is classic, what are the learnings from linear regression that
 
 - Bias-Variance trade-off
 
-
 ## Concepts Summary
 
-## Lab: Linear Regression
+RSS, beta_1, beta_2, Contour of RSS, Population regression line, least square line, 
+
+SE of beta, CI of beta, Hypothesis testing of beta, t-statistic of beta, 
+
+RSE, R square, Cor, F-statistic
+
+Qualitative var and dummy var, 
+
+Interaction term, additive assumption, 
+
+non-linearity, correlation of error terms, 
+
+Heteroscedasticity, 
+
+outliers, leverage point, influential point, 
+
+## Lab1: Simple Linear Regression
+
+```{r}
+library(ISLR2)
+
+library(tidyverse)
+
+library(MASS)
+```
+
+```{r}
+data("Boston")
+
+head(Boston)
+```
+
+```{r}
+lm.fit <- lm(medv ~ lstat, data = Boston)
+```
+
+```{r}
+lm.fit
+
+summary(lm.fit)
+```
+
+```{r}
+names(lm.fit)
+```
+
+```{r}
+coef(lm.fit); confint(lm.fit)
+```
+
+```{r}
+predict(lm.fit, data.frame((lstat = c(5, 10, 15))), 
+        interval = "confidence")
+```
+
+```{r}
+predict(lm.fit, data.frame((lstat = c(5, 10, 15))), 
+        interval = "prediction")
+```
+### Why prediction interval wider than confidence interval. 
+
+__Confidence interval__: 
+
+- Uncertainty in the estimation of population mean--population parameter
+
+$$
+\bar{y} \pm t_{\alpha/2, n -1} \cdot\frac{s}{\sqrt{n}}
+$$
+
+Confidence interval is the interval for the mean. 
+
+__Prediction Interval__:
+
+$$
+\bar{y} \pm t_{\alpha/2, n -1} \cdot s \sqrt{1 + \frac{1}{n}}
+$$
+
+Prediction interval is wider than confidence because of two sources of uncertainties in prediction: 
+
+the uncertainties of the mean, i.e., regression line, and 
+
+the uncertainties of response, i.e., the $\epsilon$
+
+```{r}
+plot(Boston$lstat, Boston$medv)
+abline(lm.fit)
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(lm.fit)
+```
+
+### How to interpret the QQ plot of regression diagnosis. 
+
+Normal error assumption, Ideally, the residuals will be very close to normal distribution and fall around the 45 degree line. 
+
+Heavy Tails: If points diverge from the line at both ends but are close in the middle, the residuals have more extreme values than expected (heavy-tailed distribution).
+
+Light Tails: If points are close to the line at the ends but diverge in the middle, the residuals have fewer extreme values than expected (light-tailed distribution).
+
+Positive Skewness: If points curve below the line on the left and above the line on the right, the distribution is right-skewed.
+
+Negative Skewness: If points curve above the line on the left and below the line on the right, the distribution is left-skewed.
+
+```{r}
+plot(predict(lm.fit), residuals(lm.fit))
+
+plot(predict(lm.fit), rstudent(lm.fit))
+```
+
+### Hatvalue and the empirical threshold. 
+
+```{r}
+plot(hatvalues(lm.fit))
+which.max(hatvalues(lm.fit))
+```
+
+## Lab2: Multiple Linear Regression. 
+
+```{r}
+lm.fit <- lm(medv ~ lstat + age, data = Boston)
+
+summary(lm.fit)
+
+```
+
+```{r}
+lm.fit <- lm(medv ~ ., data = Boston)
+
+summary(lm.fit)
+```
+
+### VIF
+
+```{r}
+library(car)
+```
+
+```{r}
+vif(lm.fit)
+```
+
+## Lab3: Interaction Terms
+
+```{r}
+summary(lm(medv ~ lstat * age, data = Boston))
+```
+
+## Lab4: Non-Linear Transformation of the Predictors. 
+
+```{r}
+lm.fit2 <- lm(medv ~ lstat + I(lstat^2), data = Boston)
+
+summary(lm.fit2)
+```
+
+### anova comparison of models. 
+
+```{r}
+anova(lm.fit, lm.fit2)
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(lm.fit2)
+```
+
+### High order polynomials. 
+
+```{r}
+# Fifth-order polynomial
+lm.fit5 <- lm(medv ~ poly(lstat, 5), data = Boston)
+
+summary(lm.fit5)
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(lm.fit5)
+```
+
+```{r}
+anova(lm.fit2, lm.fit5)
+```
+
+### log transformaiton
+
+## Lab5: Qualitative Predictors
+
+```{r}
+head(Carseats)
+```
+
+```{r}
+lm.fit <- lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
+```
+
+
 
 ## Exercises. 
